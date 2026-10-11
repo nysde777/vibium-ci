@@ -1,6 +1,10 @@
 name: Pruebas Vibium
 on: [push, pull_request]
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   pruebas:
     runs-on: ubuntu-latest
@@ -12,4 +16,18 @@ jobs:
     - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
     - run: npm ci
     - run: npx vibium install
-    - run: npm test
+    - run: npm run test:ci
+    - name: Publicar reporte JUnit
+      if: always()
+      uses: mikepenz/action-junit-report@v5
+      with:
+        report_paths: reportes/junit.xml
+        check_name: Resultados de pruebas
+        detailed_summary: true
+        include_passed: true
+    - name: Subir reportes
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: reportes
+        path: reportes/

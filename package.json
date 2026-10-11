@@ -2,25 +2,11 @@
   "name": "vibium-ci",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "node --test",
     "test:paralelo": "node --test --test-concurrency=3",
-    "pretest:ci": "node -e \"require('fs').mkdirSync('reportes', { recursive: true })\"",
-    "test:ci": "node --test --test-concurrency=3 --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=reportes/junit.xml --test-reporter=./reporte-html.js --test-reporter-destination=reportes/reporte.html"
+    "test:ci": "node -e \"require('fs').mkdirSync('reportes', { recursive: true })\" && node --test --test-concurrency=3 --test-reporter=spec --test-reporter-destination=stdout --test-reporter=junit --test-reporter-destination=reportes/junit.xml --test-reporter=./reporte-html.js --test-reporter-destination=reportes/reporte.html"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nysde777/vibium-ci.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nysde777/vibium-ci/issues"
-  },
-  "homepage": "https://github.com/nysde777/vibium-ci#readme",
   "dependencies": {
     "vibium": "^26.8.21"
   }
