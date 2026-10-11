@@ -1,0 +1,15 @@
+name: Pruebas Vibium
+on: [push, pull_request]
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
+      with:
+        node-version: 24
+    - run: echo 0 | sudo tee /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+    - run: npm ci
+    - run: npx vibium install
+    - run: npm test
